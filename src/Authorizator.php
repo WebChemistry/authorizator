@@ -20,7 +20,7 @@ class Authorizator implements AuthorizatorInterface
 	{
 	}
 
-	public function isGranted(?object $user, object|string $subject, string $operation): bool
+	public function isGranted(?object $user, object|string $subject, ?string $operation = null): bool
 	{
 		if (is_string($subject)) {
 			foreach ($this->stringVoters as $voter) {

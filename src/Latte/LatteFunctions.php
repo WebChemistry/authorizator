@@ -3,19 +3,19 @@
 namespace WebChemistry\Authorizator\Latte;
 
 use WebChemistry\Authorizator\AuthorizatorInterface;
-use WebChemistry\Authorizator\Security\UserGrantedInterface;
+use WebChemistry\Authorizator\Security\UserIsGrantedMethodInterface;
 
 final class LatteFunctions
 {
 
 	public function __construct(
-		private UserGrantedInterface $user,
+		private UserIsGrantedMethodInterface $user,
 		private AuthorizatorInterface $authorizator,
 	)
 	{
 	}
 
-	public function isGranted(string|object $subject, string $operation, ?object $user = null): bool
+	public function isGranted(string|object $subject, ?string $operation = null, ?object $user = null): bool
 	{
 		if ($user) {
 			return $this->authorizator->isGranted($user, $subject, $operation);

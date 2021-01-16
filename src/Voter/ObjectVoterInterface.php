@@ -5,8 +5,8 @@ namespace WebChemistry\Authorizator\Voter;
 interface ObjectVoterInterface
 {
 
-	public function supports(object $subject, string $operation): bool;
+	public function supports(object $subject, ?string $operation = null): bool;
 
-	public function vote(?object $user, object $subject, string $operation): bool;
+	public function vote(?object $user, object $subject, ?string $operation = null): bool;
 
 }
