@@ -1,5 +1,5 @@
 {
-	"name": "webchemistry/authoriazor",
+	"name": "webchemistry/authorizator",
 	"autoload": {
 		"psr-4": {
 			"WebChemistry\\Authorizator\\": "src"
