@@ -2,7 +2,7 @@
 
 namespace WebChemistry\Authorizator\Security;
 
-interface UserIsGrantedMethodInterface
+interface UserWithIsGrantedMethodInterface
 {
 
 	public function isGranted(string|object $subject, ?string $operation = null): bool;

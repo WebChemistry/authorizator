@@ -3,13 +3,13 @@
 namespace WebChemistry\Authorizator\Latte;
 
 use WebChemistry\Authorizator\AuthorizatorInterface;
-use WebChemistry\Authorizator\Security\UserIsGrantedMethodInterface;
+use WebChemistry\Authorizator\Security\UserWithIsGrantedMethodInterface;
 
 final class LatteFunctions
 {
 
 	public function __construct(
-		private UserIsGrantedMethodInterface $user,
+		private UserWithIsGrantedMethodInterface $user,
 		private AuthorizatorInterface $authorizator,
 	)
 	{

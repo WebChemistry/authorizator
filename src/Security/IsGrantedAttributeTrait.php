@@ -2,52 +2,45 @@
 
 namespace WebChemistry\Authorizator\Security;
 
-use Nette\Application\UI\ComponentReflection;
-use Nette\Application\UI\MethodReflection;
-use Nette\Http\IResponse;
+use LogicException;
+use ReflectionClass;
+use ReflectionMethod;
+use WebChemistry\Authorizator\Exception\UnauthorizedRequestException;
 use WebChemistry\Authorizator\Security\Attribute\IsGranted;
 
 trait IsGrantedAttributeTrait
 {
 
-	private UserIsGrantedMethodInterface $userIsGrantedMethod;
-
-	final public function injectIsGrantedAttributeTrait(
-		UserIsGrantedMethodInterface $userIsGrantedMethod
-	): void
+	final public function injectIsGrantedAttributeTrait(UserWithIsGrantedMethodInterface $user): void
 	{
-		$this->userIsGrantedMethod = $userIsGrantedMethod;
-	}
-
-	public function checkRequirementsForIsGranted(
-		ComponentReflection|MethodReflection $element,
-		?callable $errorCallback = null,
-	): void
-	{
-		$attributes = $element->getAttributes(IsGranted::class);
-		if (!$attributes) {
-			return;
-		}
-		
-		$granted = false;
-		foreach ($attributes as $attribute) {
-			/** @var IsGranted $object */
-			$object = $attribute->newInstance();
-
-			if ($this->userIsGrantedMethod->isGranted($object->getSubject(), $object->getOperation())) {
-				$granted = true;
-
-				break;
-			}
+		if (!property_exists($this, 'onCheckRequirements')) {
+			throw new LogicException(
+				sprintf('Event onCheckRequirements not exists in %s, please create it.', static::class)
+			);
 		}
 
-		if (!$granted) {
-			if ($errorCallback) {
-				$errorCallback();
+		$this->onCheckRequirements[] = function (ReflectionClass|ReflectionMethod $reflection) use ($user): void {
+			$attributes = $reflection->getAttributes(IsGranted::class);
+			if (!$attributes) {
+				return;
 			}
 
-			$this->error('User is not authorizated for action', IResponse::S401_UNAUTHORIZED);
-		}
+			$granted = false;
+			foreach ($attributes as $attribute) {
+				/** @var IsGranted $object */
+				$object = $attribute->newInstance();
+
+				if ($user->isGranted($object->getSubject(), $object->getOperation())) {
+					$granted = true;
+
+					break;
+				}
+			}
+
+			if (!$granted) {
+				throw new UnauthorizedRequestException('User is not authorizated for action.');
+			}
+		};
 	}
 
 }
