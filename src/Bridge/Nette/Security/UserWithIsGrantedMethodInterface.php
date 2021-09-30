@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\Authorizator\Security;
+namespace WebChemistry\Authorizator\Bridge\Nette\Security;
 
 interface UserWithIsGrantedMethodInterface
 {

@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\Authorizator\Security;
+namespace WebChemistry\Authorizator\Bridge\Nette\Security;
 
 use LogicException;
 use ReflectionClass;
 use ReflectionMethod;
-use WebChemistry\Authorizator\Exception\UnauthorizedRequestException;
-use WebChemistry\Authorizator\Security\Attribute\IsGranted;
+use WebChemistry\Authorizator\Bridge\Nette\Security\Attribute\IsGranted;
+use WebChemistry\Authorizator\Exception\PermissionDeniedException;
 
 trait IsGrantedAttributeTrait
 {
@@ -38,7 +38,7 @@ trait IsGrantedAttributeTrait
 			}
 
 			if (!$granted) {
-				throw new UnauthorizedRequestException('User is not authorizated for action.');
+				throw new PermissionDeniedException('User is not authorizated for action.');
 			}
 		};
 	}

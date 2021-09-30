@@ -1,14 +1,24 @@
 {
-	"name": "webchemistry/authorizator",
-	"autoload": {
-		"psr-4": {
-			"WebChemistry\\Authorizator\\": "src"
-		}
-	},
-	"require": {
-		"php": ">= 8.0"
-	},
-	"require-dev": {
-		"nette/di": "^3.0"
-	}
+    "name": "webchemistry/authorizator",
+    "autoload": {
+        "psr-4": {
+            "WebChemistry\\Authorizator\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/_support"
+        }
+    },
+    "require": {
+        "php": ">= 8.0"
+    },
+    "require-dev": {
+        "nette/di": "^3.0",
+        "codeception/codeception": "^4.1",
+        "codeception/module-phpbrowser": "^1.0.0",
+        "codeception/module-asserts": "^1.0.0",
+        "latte/latte": "^2.10",
+        "nette/application": "^3.1"
+    }
 }

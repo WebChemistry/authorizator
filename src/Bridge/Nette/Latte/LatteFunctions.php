@@ -1,9 +1,9 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\Authorizator\Latte;
+namespace WebChemistry\Authorizator\Bridge\Nette\Latte;
 
 use WebChemistry\Authorizator\AuthorizatorInterface;
-use WebChemistry\Authorizator\Security\UserWithIsGrantedMethodInterface;
+use WebChemistry\Authorizator\Bridge\Nette\Security\UserWithIsGrantedMethodInterface;
 
 final class LatteFunctions
 {

@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\Authorizator\Security\Attribute;
+namespace WebChemistry\Authorizator\Bridge\Nette\Security\Attribute;
 
 use Attribute;
 

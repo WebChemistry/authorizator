@@ -1,15 +1,14 @@
 <?php declare(strict_types = 1);
 
-namespace WebChemistry\Authorizator\DI;
+namespace WebChemistry\Authorizator\Bridge\Nette\DI;
 
-use Latte\Engine;
-use Nette\Bridges\ApplicationLatte\ILatteFactory;
+use Nette\Bridges\ApplicationLatte\LatteFactory;
 use Nette\DI\CompilerExtension;
 use WebChemistry\Authorizator\Authorizator;
 use WebChemistry\Authorizator\AuthorizatorInterface;
-use WebChemistry\Authorizator\Latte\LatteFunctions;
+use WebChemistry\Authorizator\Bridge\Nette\Latte\LatteFunctions;
 
-final class AuthenticatorExtension extends CompilerExtension
+final class AuthorizatorExtension extends CompilerExtension
 {
 
 	public function loadConfiguration(): void
@@ -28,7 +27,7 @@ final class AuthenticatorExtension extends CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 
-		$builder->getDefinitionByType(ILatteFactory::class)
+		$builder->getDefinitionByType(LatteFactory::class)
 			->getResultDefinition()
 				->addSetup('addFunction', ['isGranted', [$builder->getDefinition($this->prefix('functions')), 'isGranted']]);
 	}

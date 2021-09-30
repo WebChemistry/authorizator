@@ -14,7 +14,7 @@ final class PermissionDeniedException extends ForbiddenRequestException
 		parent::__construct(
 			sprintf(
 				'User is not authorized for %s',
-				AuthorizatorUtility::printSubjectAndOperation($subject, $operation)
+				AuthorizatorUtility::debugArguments($subject, $operation)
 			)
 		);
 	}
