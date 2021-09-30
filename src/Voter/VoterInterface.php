@@ -5,6 +5,8 @@ namespace WebChemistry\Authorizator\Voter;
 interface VoterInterface
 {
 
+	const SKIP = null;
+
 	/**
 	 * Returned null skips this voter
 	 */
