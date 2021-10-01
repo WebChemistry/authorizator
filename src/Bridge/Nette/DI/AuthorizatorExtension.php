@@ -11,13 +11,19 @@ use WebChemistry\Authorizator\Bridge\Nette\Latte\LatteFunctions;
 final class AuthorizatorExtension extends CompilerExtension
 {
 
+	public function __construct(
+		private bool $debugMode = false,
+	)
+	{
+	}
+
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
 
 		$builder->addDefinition($this->prefix('authorizator'))
 			->setType(AuthorizatorInterface::class)
-			->setFactory(Authorizator::class);
+			->setFactory(Authorizator::class, ['silent' => !$this->debugMode]);
 
 		$builder->addDefinition($this->prefix('functions'))
 			->setFactory(LatteFunctions::class);

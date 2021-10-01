@@ -2,6 +2,7 @@
 
 namespace WebChemistry\Authorizator;
 
+use Tracy\ILogger;
 use WebChemistry\Authorizator\Exception\VoterNotFoundException;
 use WebChemistry\Authorizator\Utility\AuthorizatorUtility;
 use WebChemistry\Authorizator\Voter\VoterInterface;
@@ -14,8 +15,17 @@ class Authorizator implements AuthorizatorInterface
 	 */
 	public function __construct(
 		private array $voters,
+		private ?ILogger $logger = null,
+		private bool $silent = false,
 	)
 	{
+	}
+
+	public function setSilent(bool $silent): static
+	{
+		$this->silent = $silent;
+
+		return $this;
 	}
 
 	public function addVoter(VoterInterface $voter): static
@@ -42,9 +52,17 @@ class Authorizator implements AuthorizatorInterface
 			return $result;
 		}
 
-		throw new VoterNotFoundException(
-			sprintf('Voter for %s nad not found.', AuthorizatorUtility::debugArguments($user, $subject, $operation))
+		$exception = new VoterNotFoundException(
+			sprintf('Voter for %s not found.', AuthorizatorUtility::debugArguments($user, $subject, $operation))
 		);
+
+		if ($this->silent) {
+			$this->logger?->log($exception);
+
+			return false;
+		}
+
+		throw $exception;
 	}
 
 }

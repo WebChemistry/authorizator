@@ -17,7 +17,7 @@ final class StringVoter implements VoterInterface
 		return match ($operation) {
 			'true' => true,
 			'false' => false,
-			default => throw BadOperationException::create($this, $operation),
+			default => null,
 		};
 	}
 

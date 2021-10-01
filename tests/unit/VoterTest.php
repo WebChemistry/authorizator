@@ -61,16 +61,22 @@ class VoterTest extends \Codeception\Test\Unit
 
 	public function testStringVoterOperationNotFound()
 	{
-		self::expectException(BadOperationException::class);
+		self::expectException(VoterNotFoundException::class);
 
 		$this->authorizator->isGranted(null, 'string', 'not');
 	}
 
 	public function testObjectVoterOperationNotFound()
 	{
-		self::expectException(BadOperationException::class);
+		self::expectException(VoterNotFoundException::class);
 
 		$this->authorizator->isGranted(null, new Post(), 'not');
+	}
+
+	public function testSilent()
+	{
+		$this->authorizator->setSilent(true);
+		self::assertFalse($this->authorizator->isGranted(null, new Post(), 'not'));
 	}
 
 }
