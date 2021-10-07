@@ -5,6 +5,6 @@ namespace WebChemistry\Authorizator;
 interface AuthorizatorInterface
 {
 
-	public function isGranted(object $user, string|object $subject, ?string $operation = null, string $strategy = 'affirmative'): bool;
+	public function isGranted(?object $user, string|object $subject, ?string $operation = null, string $strategy = 'affirmative'): bool;
 
 }
