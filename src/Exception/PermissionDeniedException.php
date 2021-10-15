@@ -9,14 +9,22 @@ use WebChemistry\Authorizator\Utility\AuthorizatorUtility;
 final class PermissionDeniedException extends ForbiddenRequestException
 {
 
-	public function __construct(string|object $subject, ?string $operation = null)
+	public function __construct(?object $user, string|object $subject, ?string $operation = null)
 	{
 		parent::__construct(
 			sprintf(
-				'User is not authorized for %s',
-				AuthorizatorUtility::debugArguments($subject, $operation)
+				'Not authorized. %s',
+				ucfirst(AuthorizatorUtility::debugArguments($user, $subject, $operation))
 			)
 		);
+	}
+
+	public static function withMessage(string $message): self
+	{
+		$expection = new self(null, '', null);
+		$expection->message = $message;
+
+		return $expection;
 	}
 
 }

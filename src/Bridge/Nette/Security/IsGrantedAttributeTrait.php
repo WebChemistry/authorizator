@@ -38,7 +38,7 @@ trait IsGrantedAttributeTrait
 			}
 
 			if (!$granted) {
-				throw new PermissionDeniedException('User is not authorizated for action.');
+				throw PermissionDeniedException::withMessage('User is not authorized for action.');
 			}
 		};
 	}
